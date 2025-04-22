@@ -3,7 +3,7 @@
     <div class="board">
 
       <div class="clear-button">
-        <ui-button :disabled="lists.length === 0" @click="reset">Reset</ui-button>
+        <ui-button :disabled="lists.length === 0" @click="reset">清空</ui-button>
       </div>
 
       <div class="lists-container">
@@ -38,7 +38,7 @@
 
               <div class="item-entry">
                 <ui-item-entry :list-id="list.id"
-                               placeholder="Add an item"
+                               placeholder="新增卡片"
                                icon="ellipsis-h"
                                @enter="onAddItem"/>
               </div>
@@ -50,7 +50,7 @@
         </Container>
 
         <div class="new-list">
-          <ui-item-entry placeholder="Add a list" @enter="onAddList"/>
+          <ui-item-entry placeholder="新增清單" @enter="onAddList"/>
         </div>
       </div>
 
@@ -173,7 +173,7 @@ export default {
     },
 
     reset () {
-      if (confirm('Are you sure you want to reset the board?')) {
+      if (confirm('確定要清空看板嗎？')) {
         this.$store.commit('reset')
       }
     },

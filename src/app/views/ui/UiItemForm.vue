@@ -2,9 +2,9 @@
 
   <div class="query-form card">
     <div class="card-content">
-      <h2 class="title">New task</h2>
+      <h2 class="title">新增任務</h2>
       <ui-input name="title"
-                label="Title"
+                label="標題"
                 v-model="title"
                 v-validate="'required'"
                 :error="getError('title')"
@@ -12,18 +12,18 @@
       />
       <ui-input name="description"
                 type="textarea"
-                label="Description"
+                label="描述"
                 v-model="description"
       />
       <ui-input name="date"
                 type="date"
-                label="Date"
+                label="日期"
                 v-model="date"
                 @enter="validate"
       />
       <div class="field is-grouped">
-        <ui-button type="primary" @click="validate">{{ id ? 'Update' : 'Add' }}</ui-button>
-        <ui-button type="text" @click="cancel">Cancel</ui-button>
+        <ui-button type="primary" @click="validate">{{ id ? '更新' : '新增' }}</ui-button>
+        <ui-button type="text" @click="cancel">取消</ui-button>
       </div>
     </div>
   </div>
@@ -66,7 +66,7 @@ export default {
           if (state) {
             return this.submit()
           }
-          this.message = 'Please complete the required fields!'
+          this.message = '請填寫所有必填欄位！'
         })
     },
 
