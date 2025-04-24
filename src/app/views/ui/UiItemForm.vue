@@ -93,5 +93,28 @@ export default {
 </script>
 
 <style lang="scss">
-
+.query-form.card {
+  max-width: 540px;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(33,150,243,0.08), 0 1.5px 8px rgba(33,150,243,0.06);
+  padding: 0 0 12px 0;
+  background: #fff !important;
+}
+.card-content {
+  padding: 32px 32px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.title {
+  font-size: 1.3em;
+  color: #1976d2;
+  margin-bottom: 12px;
+}
+.field.is-grouped {
+  gap: 12px;
+  margin-top: 12px;
+}
 </style>
