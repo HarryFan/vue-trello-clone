@@ -11,6 +11,9 @@
       <span class="icon icon-edit" @click="edit">
         <i class="fas fa-edit"></i>
       </span>
+      <span class="icon icon-delete" @click.stop="deleteItem" title="刪除任務">
+        <i class="fas fa-trash-alt"></i>
+      </span>
     </div>
     <div>
       <p class="item-title">{{ item.title }}</p>
@@ -54,6 +57,9 @@ export default {
   methods: {
     edit () {
       this.$emit('edit', this.item)
+    },
+    deleteItem () {
+      this.$emit('delete', this.item)
     }
   }
 }
@@ -75,7 +81,11 @@ export default {
     position: absolute;
     top: 10px;
     right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
     cursor: pointer;
+    z-index: 2;
   }
 
   .is-overdue {
@@ -90,16 +100,54 @@ export default {
     }
   }
 
-  .icon-edit,
-  .icon-date {
+  .icon-edit, .icon-date {
     color: #DDD;
   }
 
-  .icon-edit {
+  .icon-edit, .icon-delete {
     display: none;
-    margin-right: -5px;
-    .card:hover & {
-      display: block;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    font-size: 1.1em;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .icon-edit {
+    color: #b0b0b0;
+    margin-right: 0;
+  }
+
+  .icon-delete {
+    color: #e57373;
+    margin-left: 2px;
+    transition: color 0.2s;
+  }
+
+  .icon-delete:hover {
+    color: #c62828;
+  }
+
+  .card:hover .icon-edit,
+  .card:hover .icon-delete {
+    display: flex;
+  }
+
+  @media (max-width: 600px) {
+    .icons {
+      top: 7px;
+      right: 7px;
+      gap: 0.3em;
+    }
+    .icon-edit, .icon-delete {
+      width: 20px;
+      height: 20px;
+      font-size: 1em;
     }
   }
 </style>

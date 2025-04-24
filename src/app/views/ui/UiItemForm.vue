@@ -101,20 +101,40 @@ export default {
   box-shadow: 0 4px 24px rgba(33,150,243,0.08), 0 1.5px 8px rgba(33,150,243,0.06);
   padding: 0 0 12px 0;
   background: #fff !important;
+  @media (max-width: 600px) {
+    max-width: 98vw;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+  }
 }
 .card-content {
   padding: 32px 32px 16px 32px;
   display: flex;
   flex-direction: column;
   gap: 18px;
+  @media (max-width: 600px) {
+    padding: 18px 8px 10px 8px;
+    gap: 10px;
+  }
 }
 .title {
   font-size: 1.3em;
   color: #1976d2;
   margin-bottom: 12px;
+  @media (max-width: 600px) {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+  }
 }
 .field.is-grouped {
   gap: 12px;
   margin-top: 12px;
+  @media (max-width: 600px) {
+    gap: 6px;
+    margin-top: 8px;
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 </style>
