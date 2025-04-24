@@ -40,7 +40,7 @@ export const mutations = {
 
   removeList (state, { listId }) {
     const index = state.lists.findIndex(list => list.id === listId)
-    state.lists.splice(index, 1)
+    if (index > -1) state.lists.splice(index, 1)
   },
 
   addItem (state, { listId, title, description, date }) {

@@ -19,7 +19,10 @@
 
               <div class="list-header">
                 <span class="list-drag-handle">&#x2630;</span>
-                {{ list.title }}
+                <span class="list-title">{{ list.title }}</span>
+                <span class="list-delete" title="刪除此清單" @click="deleteList(list.id)">
+                  <i class="fas fa-trash-alt"></i>
+                </span>
               </div>
 
               <Container
@@ -31,7 +34,7 @@
                 @drop="e => onCardDrop(e, list, listIndex)"
               >
                 <Draggable v-for="item in list.items" :key="item.id">
-                  <Card :item="item" @edit="editItem"/>
+                  <Card :item="item" @edit="editItem" @delete="deleteItem(list.id, item.id)"/>
                 </Draggable>
 
               </Container>
@@ -210,6 +213,18 @@ export default {
       }
     },
 
+    deleteItem(listId, itemId) {
+      if (confirm('確定要刪除此任務嗎？')) {
+        this.$store.commit('removeItem', { itemId })
+      }
+    },
+
+    deleteList(listId) {
+      if (confirm('確定要刪除此清單（底下所有任務將一併刪除）？')) {
+        this.$store.commit('removeList', { listId })
+      }
+    },
+
     updateOrientation() {
       this.containerOrientation = window.innerWidth <= 600 ? 'vertical' : 'horizontal'
     },
@@ -289,6 +304,14 @@ export default {
       color: #1976d2;
       letter-spacing: 1px;
       margin-bottom: 6px;
+    }
+    .list-delete {
+      float: right;
+      cursor: pointer;
+      color: #ccc;
+      &:hover {
+        color: #f44336;
+      }
     }
   }
 
