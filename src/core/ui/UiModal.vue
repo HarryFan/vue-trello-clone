@@ -46,12 +46,16 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import '@/../res/assets/styles/index.scss';
+
 .modal-content {
-  background: #fff !important;
+  background: $color-bg;
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(33,150,243,0.08), 0 1.5px 8px rgba(33,150,243,0.06);
-  padding: 32px 24px 24px 24px;
+  box-shadow: 0 8px 32px rgba($color-black, 0.12), 0 1.5px 8px rgba($color-primary, 0.08);
+  color: $text-primary;
+  padding: 2em 2.5em;
+  border: 1px solid $color-grey;
   min-width: 340px;
   max-width: 560px;
   width: 100%;
@@ -60,6 +64,7 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+
 .modal-background {
   background: rgba(0,0,0,0.35);
 }

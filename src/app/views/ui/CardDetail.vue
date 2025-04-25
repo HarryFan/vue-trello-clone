@@ -80,7 +80,7 @@ export default {
   }
 }
 .card-detail__header {
-  border-bottom: 1px solid #e0f2ff;
+  border-bottom: 1px solid #FFF9C4;
   margin-bottom: 12px;
 }
 .card-detail__title {
@@ -91,14 +91,14 @@ export default {
   margin-bottom: 6px;
   background: transparent;
   outline: none;
-  color: #1976d2;
+  color: #C7A600;
   @media (max-width: 600px) {
     font-size: 1em;
   }
 }
 .card-detail__meta {
   font-size: 0.9em;
-  color: #2196f3;
+  color: #FFD600;
   display: flex;
   gap: 16px;
   @media (max-width: 600px) {
@@ -113,18 +113,18 @@ export default {
 }
 .card-detail__label {
   font-size: 0.95em;
-  color: #1976d2;
+  color: #FFD600;
 }
 .card-detail__desc {
   width: 100%;
   min-height: 60px;
-  border: 1px solid #e0f2ff;
+  border: 1px solid #FFF9C4;
   border-radius: 4px;
   padding: 8px;
   font-size: 1em;
   resize: vertical;
-  background: #f7fbff;
-  color: #1976d2;
+  background: #FFFDE7;
+  color: #C7A600;
   @media (max-width: 600px) {
     font-size: 0.95em;
     padding: 6px;

@@ -49,6 +49,7 @@ export default {
 
 </script>
 
-<style lang="scss">
-
+<style lang="scss" scoped>
+@import '@/../res/assets/styles/index.scss';
+// 若需特殊樣式可於此覆蓋
 </style>

@@ -20,9 +20,9 @@ export default {
 </script>
 
 <style lang="scss">
-  $primary: #2196f3;
-  $primary-dark: #1976d2;
-  $primary-light: #e0f2ff;
+  $primary: #B6862C;
+  $primary-dark: #8D6E33;
+  $primary-light: #FAF6EF;
   $primary-bg: #fff;
 
   html, body {
@@ -51,7 +51,8 @@ export default {
   .button.is-primary {
     background: $primary;
     border-color: $primary-dark;
-    color: #fff;
+    color: #222;
+    font-weight: bold;
     &:hover, &:focus {
       background: $primary-dark;
       border-color: $primary-dark;
@@ -59,9 +60,9 @@ export default {
     }
     &[disabled],
     &.is-disabled {
-      background: #b3d1f7;
-      border-color: #b3d1f7;
-      color: #fff;
+      background: #FAF6EF;
+      border-color: #FAF6EF;
+      color: #bdb76b;
       opacity: 0.7;
       cursor: not-allowed;
       box-shadow: none;

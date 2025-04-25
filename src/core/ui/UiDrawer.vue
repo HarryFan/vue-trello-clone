@@ -31,6 +31,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/../res/assets/styles/index.scss';
+
 .ui-drawer {
   position: fixed;
   z-index: 1000;
@@ -40,6 +42,10 @@ export default {
   height: 100vh;
   display: flex;
   align-items: stretch;
+  background: $color-bg;
+  color: $text-primary;
+  border-left: 1px solid $color-grey;
+  box-shadow: 0 2px 16px rgba($color-black, 0.12);
 }
 .ui-drawer__backdrop {
   flex: 1;

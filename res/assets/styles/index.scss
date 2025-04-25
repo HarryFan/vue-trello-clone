@@ -1,0 +1,73 @@
+// 土黃色系設計
+$color-primary: #B6862C;    // 主土黃
+$color-accent:  #8D6E33;    // 深土黃
+$color-black:   #222222;    // 主黑
+$color-grey:    #444444;    // 次黑/灰
+$color-bg:      #FAF6EF;    // 亮米白
+
+// 文字色
+$text-primary: $color-black;
+$text-inverse: #fff;
+$text-accent:  $color-accent;
+$text-grey:    $color-grey;
+
+// 按鈕
+.button {
+  background: $color-primary;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5em 1.2em;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-weight: bold;
+  &:hover {
+    background: #fff;
+    color: $color-primary;
+    border: 2px solid $color-primary;
+  }
+}
+
+// 卡片
+.card {
+  background: $color-bg;
+  color: $text-primary;
+  border: 1px solid $color-grey;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(34,34,34,0.05);
+  padding: 1.2em 1.6em;
+}
+
+// 表單欄位
+.field {
+  margin-bottom: 1.2em;
+  .label {
+    color: $text-primary;
+    font-weight: 600;
+  }
+  .control {
+    .input, .textarea {
+      background: $color-bg;
+      border: 1px solid $color-grey;
+      color: $text-primary;
+      border-radius: 4px;
+      padding: 0.6em 1em;
+      font-size: 1rem;
+      &.is-danger {
+        border-color: $color-accent;
+        color: $color-accent;
+      }
+    }
+  }
+}
+
+body {
+  background: $color-bg;
+  color: $text-primary;
+}
+
+.divider {
+  border-top: 1.5px solid $color-primary;
+  margin: 2em 0;
+}

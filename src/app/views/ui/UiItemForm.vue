@@ -2,7 +2,7 @@
 
   <div class="query-form card">
     <div class="card-content">
-      <h2 class="title">新增任務</h2>
+      <h2 class="title title-earth">新增任務</h2>
       <ui-input name="title"
                 label="標題"
                 v-model="title"
@@ -92,7 +92,9 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+@import '@/../res/assets/styles/index.scss';
+
 .query-form.card {
   max-width: 540px;
   width: 100%;
@@ -126,6 +128,11 @@ export default {
     font-size: 1.1em;
     margin-bottom: 8px;
   }
+}
+.title-earth {
+  color: $color-primary;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 .field.is-grouped {
   gap: 12px;
