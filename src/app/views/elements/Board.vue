@@ -275,8 +275,8 @@ export default {
       border-radius: 8px;
       box-shadow: 0 1.5px 8px rgba(33,150,243,0.10);
       padding: 10px 6px 16px 6px;
-      background: #f7fbff;
-      border: 1.5px solid #e0f2ff;
+      // background: #f8e7c7;
+      // border: 1.5px solid #e7c27a;
     }
   }
 
@@ -301,7 +301,7 @@ export default {
     @media (max-width: 600px) {
       font-size: 1.1em;
       font-weight: bold;
-      color: #1976d2;
+      color: #b88a3a;
       letter-spacing: 1px;
       margin-bottom: 6px;
     }
