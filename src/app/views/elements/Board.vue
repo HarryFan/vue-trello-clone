@@ -233,6 +233,11 @@ export default {
 </script>
 
 <style lang="scss">
+  $blue-gray: #f7f7f7;
+  $dark-blue: #2196f3;
+  $light-blue: #add8e6;
+  $primary-blue: #03a9f4;
+
   .board {
     padding: 0 1px;
     margin-top: 20px;
@@ -265,15 +270,17 @@ export default {
     padding: 10px;
     margin: 5px;
     margin-right: 20px;
-    background-color: #f3f3f3;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
+    background-color: $blue-gray;
+    box-shadow: 0 1px 1px rgba($dark-blue, 0.12), 0 1px 1px rgba($dark-blue, 0.24);
     border-radius: 8px;
     @media (max-width: 600px) {
       width: $column-width-mobile;
       min-width: 0;
       margin: 12px auto;
       border-radius: 8px;
-      box-shadow: 0 1.5px 8px rgba(33,150,243,0.10);
+      background-color: white;
+      border: 1px solid $light-blue;
+      box-shadow: 0 1.5px 8px rgba($primary-blue, 0.10);
       padding: 10px 6px 16px 6px;
     }
   }
@@ -306,17 +313,18 @@ export default {
   .list-header {
     margin-bottom: 5px;
     font-size: 18px;
+    color: $dark-blue;
     @media (max-width: 600px) {
       font-size: 1.1em;
       font-weight: bold;
-      color: #b88a3a;
       letter-spacing: 1px;
       margin-bottom: 6px;
+      padding: 0 4px;
     }
     .list-delete {
       float: right;
       cursor: pointer;
-      color: #ccc;
+      color: $primary-blue;
       &:hover {
         color: #f44336;
       }
@@ -326,26 +334,47 @@ export default {
   .card {
     margin: 5px;
     background-color: white;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 1px rgba($dark-blue, 0.12), 0 1px 1px rgba($dark-blue, 0.24);
     padding: 10px;
     border-radius: 6px;
     @media (max-width: 600px) {
-      margin: 8px 0;
+      margin: 8px 4px;
       padding: 12px 8px;
-      box-shadow: 0 1px 4px rgba(33,150,243,0.10);
+      background-color: $blue-gray;
+      box-shadow: 0 1px 4px rgba($primary-blue, 0.10);
       border-radius: 6px;
-      border: 1px solid #e0f2ff;
+      border: 1px solid $light-blue;
     }
   }
 
   .item-entry {
     padding-top: 10px;
     margin-top: 10px;
-    border-top: 1px solid #DDD;
+    border-top: 1px solid $light-blue;
     @media (max-width: 600px) {
-      padding-top: 6px;
+      padding: 6px 4px 0;
       margin-top: 6px;
       border-top: none;
+    }
+    .input {
+      border-color: $light-blue;
+      &:focus {
+        border-color: $primary-blue;
+        box-shadow: 0 0 0 1px $primary-blue;
+      }
+    }
+    .button.is-primary {
+      background-color: $primary-blue;
+      border-color: $primary-blue;
+      &:hover {
+        background-color: $dark-blue;
+        border-color: $dark-blue;
+      }
+      &[disabled] {
+        background-color: $light-blue;
+        border-color: $light-blue;
+        opacity: 0.7;
+      }
     }
   }
 
