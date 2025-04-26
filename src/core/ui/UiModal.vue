@@ -50,7 +50,7 @@ export default {
 @import '@/../res/assets/styles/index.scss';
 
 .modal-content {
-  background: $color-bg;
+  background: white;
   border-radius: 8px;
   box-shadow: 0 8px 32px rgba($color-black, 0.12), 0 1.5px 8px rgba($color-primary, 0.08);
   color: $text-primary;

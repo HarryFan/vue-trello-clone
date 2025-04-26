@@ -20,49 +20,50 @@ export default {
 </script>
 
 <style lang="scss">
-  $primary: #B6862C;
-  $primary-dark: #8D6E33;
-  $primary-light: #FAF6EF;
-  $primary-bg: #fff;
+  $primary-blue: #2c6bed;
+  $secondary-blue: #4a90e2;
+  $light-blue: #b6d4ff;
+  $dark-blue: #1a4894;
+  $blue-gray: #f0f4f9;
 
   html, body {
     height: 100%;
-    background: $primary-bg;
+    background: $blue-gray;
   }
 
   body {
     padding: 20px;
-    background: $primary-bg;
+    background: $blue-gray;
   }
 
   #app {
-    color: $primary-dark;
+    color: $dark-blue;
   }
 
   h1, .is-size-3 {
-    color: $primary;
+    color: $primary-blue;
     letter-spacing: 1px;
   }
 
   .subtitle {
-    color: $primary-dark;
+    color: $secondary-blue;
   }
 
   .button.is-primary {
-    background: $primary;
-    border-color: $primary-dark;
-    color: #222;
+    background: $primary-blue;
+    border-color: $dark-blue;
+    color: white;
     font-weight: bold;
     &:hover, &:focus {
-      background: $primary-dark;
-      border-color: $primary-dark;
-      color: #fff;
+      background: $dark-blue;
+      border-color: $dark-blue;
+      color: white;
     }
     &[disabled],
     &.is-disabled {
-      background: #FAF6EF;
-      border-color: #FAF6EF;
-      color: #bdb76b;
+      background: $light-blue;
+      border-color: $light-blue;
+      color: $secondary-blue;
       opacity: 0.7;
       cursor: not-allowed;
       box-shadow: none;

@@ -1,0 +1,88 @@
+// Blue color scheme variables
+$primary-blue: #2c6bed;
+$secondary-blue: #4a90e2;
+$light-blue: #b6d4ff;
+$dark-blue: #1a4894;
+$blue-gray: #f0f4f9;
+
+// Base styles
+body {
+  background-color: $blue-gray;
+}
+
+// Board styles
+.board {
+  // background-color: $light-blue;
+  
+  &-header {
+    background-color: $dark-blue;
+    color: white;
+  }
+}
+
+// Card styles
+.card {
+  background-color: white;
+  border-left: 3px solid $primary-blue;
+  
+  &:hover {
+    background-color: $blue-gray;
+  }
+}
+
+// Button styles
+.btn {
+  background-color: $secondary-blue;
+  color: white;
+  
+  &:hover {
+    background-color: $primary-blue;
+  }
+}
+
+// List styles
+.list {
+  background-color: $blue-gray;
+  border-radius: 4px;
+  
+  &-header {
+    color: $dark-blue;
+  }
+}
+
+// Navigation styles
+.nav {
+  background-color: $dark-blue;
+  color: white;
+}
+
+// Modal styles
+.modal {
+  &.is-active {
+    .modal-background {
+      background-color: rgba($dark-blue, 0.86);
+    }
+    
+    .modal-card {
+      border-top: 5px solid $primary-blue;
+      
+      &-head {
+        background-color: $blue-gray;
+        border-bottom: 1px solid $light-blue;
+      }
+      
+      &-title {
+        color: $dark-blue;
+      }
+      
+      &-body {
+        background-color: white;
+      }
+      
+      &-foot {
+        background-color: $blue-gray;
+        border-top: 1px solid $light-blue;
+      }
+    }
+  }
+}

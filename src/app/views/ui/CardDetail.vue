@@ -65,6 +65,12 @@ export default {
 
 <style lang="scss" scoped>
 .card-detail {
+  $primary-blue: #2c6bed;
+  $secondary-blue: #4a90e2;
+  $light-blue: #b6d4ff;
+  $dark-blue: #1a4894;
+  $blue-gray: #f0f4f9;
+
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -72,62 +78,73 @@ export default {
   max-width: 520px;
   width: 100%;
   box-sizing: border-box;
+  background-color: white;
   @media (max-width: 600px) {
     min-width: 0;
     max-width: 98vw;
     padding: 0 4vw;
     gap: 14px;
   }
-}
-.card-detail__header {
-  border-bottom: 1px solid #FFF9C4;
-  margin-bottom: 12px;
-}
-.card-detail__title {
-  font-size: 1.2em;
-  font-weight: bold;
-  border: none;
-  width: 100%;
-  margin-bottom: 6px;
-  background: transparent;
-  outline: none;
-  color: #C7A600;
-  @media (max-width: 600px) {
-    font-size: 1em;
+
+  &__header {
+    border-bottom: 1px solid $light-blue;
+    margin-bottom: 12px;
   }
-}
-.card-detail__meta {
-  font-size: 0.9em;
-  color: #FFD600;
-  display: flex;
-  gap: 16px;
-  @media (max-width: 600px) {
-    font-size: 0.85em;
+
+  &__title {
+    font-size: 1.2em;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+    margin-bottom: 6px;
+    background: transparent;
+    outline: none;
+    color: $dark-blue;
+    @media (max-width: 600px) {
+      font-size: 1em;
+    }
+  }
+
+  &__meta {
+    font-size: 0.9em;
+    color: $secondary-blue;
+    display: flex;
+    gap: 16px;
+    @media (max-width: 600px) {
+      font-size: 0.85em;
+      gap: 8px;
+    }
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
     gap: 8px;
   }
-}
-.card-detail__section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.card-detail__label {
-  font-size: 0.95em;
-  color: #FFD600;
-}
-.card-detail__desc {
-  width: 100%;
-  min-height: 60px;
-  border: 1px solid #FFF9C4;
-  border-radius: 4px;
-  padding: 8px;
-  font-size: 1em;
-  resize: vertical;
-  background: #FFFDE7;
-  color: #C7A600;
-  @media (max-width: 600px) {
+
+  &__label {
     font-size: 0.95em;
-    padding: 6px;
+    color: $secondary-blue;
+  }
+
+  &__desc {
+    width: 100%;
+    min-height: 60px;
+    border: 1px solid $light-blue;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 1em;
+    resize: vertical;
+    background: white;
+    color: $dark-blue;
+    &:focus {
+      border-color: $primary-blue;
+      outline: none;
+    }
+    @media (max-width: 600px) {
+      font-size: 0.95em;
+      padding: 6px;
+    }
   }
 }
 </style>
