@@ -234,7 +234,7 @@ export default {
 
 <style lang="scss">
   .board {
-    padding:0 1px;
+    padding: 0 1px;
     margin-top: 20px;
     white-space: nowrap;
     position: relative;
@@ -271,12 +271,10 @@ export default {
     @media (max-width: 600px) {
       width: $column-width-mobile;
       min-width: 0;
-      margin: 12px 0 18px 0;
+      margin: 12px auto;
       border-radius: 8px;
       box-shadow: 0 1.5px 8px rgba(33,150,243,0.10);
       padding: 10px 6px 16px 6px;
-      // background: #f8e7c7;
-      // border: 1.5px solid #e7c27a;
     }
   }
 
@@ -286,11 +284,21 @@ export default {
       vertical-align: top;
     }
     @media (max-width: 600px) {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       > * {
-        display: block;
         width: 100%;
         margin-right: 0;
+      }
+      .smooth-dnd-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+      .smooth-dnd-draggable-wrapper {
+        width: 100%;
       }
     }
   }
@@ -350,7 +358,7 @@ export default {
     }
     @media (max-width: 600px) {
       width: $column-width-mobile;
-      margin-left: 0;
+      margin: 12px auto;
     }
   }
 
