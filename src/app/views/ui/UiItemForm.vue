@@ -21,6 +21,20 @@
                 v-model="date"
                 @enter="validate"
       />
+      <!-- 圖片上傳/預覽區塊 -->
+      <div class="images">
+        <div v-for="imgId in images" :key="imgId" class="image-preview">
+          <img :src="getImageFromStorage(imgId)" alt="Task image" />
+          <button class="delete is-small" @click="removeImage(imgId)"></button>
+        </div>
+        <div class="image-upload">
+          <input type="file" ref="fileInput" accept="image/*" @change="onImageUpload" style="display:none" />
+          <button class="button is-info is-light" @click="$refs.fileInput.click()">
+            <span class="icon"><i class="fas fa-upload"></i></span>
+            <span>上傳圖片</span>
+          </button>
+        </div>
+      </div>
       <div class="field is-grouped">
         <ui-button type="primary" @click="validate">{{ id ? '更新' : '新增' }}</ui-button>
         <ui-button type="text" @click="cancel">取消</ui-button>
@@ -38,6 +52,7 @@ function data () {
     title: '',
     description: '',
     date: null,
+    images: [],
     message: '',
   }
 }
@@ -86,7 +101,42 @@ export default {
 
     getError (name) {
       return (this.errors.first(name) || '').replace(/The .+ field/, 'This field')
-    }
+    },
+    // 圖片功能
+    getImageFromStorage(imgId) {
+      try {
+        return localStorage.getItem(`trello_image_${imgId}`)
+      } catch (e) {
+        return ''
+      }
+    },
+    removeImage(imgId) {
+      try {
+        localStorage.removeItem(`trello_image_${imgId}`)
+      } catch (e) {}
+      this.images = this.images.filter(id => id !== imgId)
+    },
+    onImageUpload(e) {
+      const file = e.target.files[0]
+      if (!file) return
+      if (file.size > 1024 * 1024) {
+        alert('圖片大小不能超過 1MB')
+        return
+      }
+      const reader = new FileReader()
+      reader.onload = (evt) => {
+        const base64 = evt.target.result
+        // 產生一個隨機 id
+        const imgId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
+        try {
+          localStorage.setItem(`trello_image_${imgId}`, base64)
+          this.images.push(imgId)
+        } catch (e) {
+          alert('圖片儲存失敗，請檢查瀏覽器空間')
+        }
+      }
+      reader.readAsDataURL(file)
+    },
   }
 }
 
@@ -142,6 +192,37 @@ export default {
     margin-top: 8px;
     flex-direction: column;
     align-items: stretch;
+  }
+}
+.images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+  .image-preview {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .delete {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      z-index: 2;
+    }
+  }
+  .image-upload {
+    display: flex;
+    align-items: center;
+    .button {
+      padding: 0.4em 1.1em;
+      font-size: 0.95em;
+    }
   }
 }
 </style>
