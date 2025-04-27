@@ -29,6 +29,20 @@
         </div>
       </div>
     </div>
+    <!-- 細項清單區塊 -->
+    <div class="card-detail__section">
+      <label class="card-detail__label">細項</label>
+      <div class="subitems">
+        <div v-for="(sub, idx) in editSubItems" :key="sub.id" class="subitem-row">
+          <input type="checkbox" v-model="sub.isCompleted" @change="onSubItemToggle(idx)" />
+          <span :class="{ 'completed': sub.isCompleted }">{{ sub.text }}</span>
+        </div>
+        <div class="subitem-add">
+          <input v-model="newSubItemText" @keyup.enter="addSubItem" placeholder="新增細項..." />
+          <button class="button is-small is-info" @click="addSubItem" :disabled="!newSubItemText.trim()">新增</button>
+        </div>
+      </div>
+    </div>
     <div class="card-detail__footer">
       <button class="button is-primary" @click="onConfirmClick">確認</button>
     </div>
@@ -47,6 +61,8 @@ export default {
       editTitle: this.item.title,
       editDesc: this.item.description || '',
       editImages: this.item.images ? [...this.item.images] : [],
+      editSubItems: this.item.subItems ? JSON.parse(JSON.stringify(this.item.subItems)) : [],
+      newSubItemText: '',
     }
   },
   watch: {
@@ -56,6 +72,8 @@ export default {
         this.editTitle = val.title
         this.editDesc = val.description || ''
         this.editImages = val.images ? [...val.images] : []
+        this.editSubItems = val.subItems ? JSON.parse(JSON.stringify(val.subItems)) : []
+        this.newSubItemText = ''
       },
     },
   },
@@ -86,6 +104,7 @@ export default {
         title: this.editTitle,
         description: this.editDesc,
         images: this.editImages,
+        subItems: this.editSubItems,
         updatedAt: new Date().toISOString(),
       })
     },
@@ -115,6 +134,18 @@ export default {
         }
       }
       reader.readAsDataURL(file)
+    },
+    // 細項功能
+    onSubItemToggle(idx) {
+      this.editSubItems[idx].isCompleted = !this.editSubItems[idx].isCompleted
+      this.emitUpdate()
+    },
+    addSubItem() {
+      const text = this.newSubItemText.trim()
+      if (!text) return
+      this.editSubItems.push({ id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5), text, isCompleted: false })
+      this.newSubItemText = ''
+      this.emitUpdate()
     },
   },
 }
@@ -244,6 +275,30 @@ export default {
       .button {
         padding: 0.4em 1.1em;
         font-size: 0.95em;
+      }
+    }
+  }
+  // 細項樣式
+  .subitems {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    .subitem-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      .completed {
+        text-decoration: line-through;
+        color: #bbb;
+      }
+    }
+    .subitem-add {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+      input {
+        flex: 1;
+        min-width: 0;
       }
     }
   }
