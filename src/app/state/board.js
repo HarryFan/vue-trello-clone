@@ -48,10 +48,10 @@ export const mutations = {
     list.items.push(makeItem(title, description, date))
   },
 
-  updateItem (state, { itemId, title, description, date }) {
-    const item = getItemById(state.lists, itemId)
+  updateItem (state, payload) {
+    const item = getItemById(state.lists, payload.itemId)
     if (item) {
-      Object.assign(item, makeItem(title, description, date, itemId))
+      Object.assign(item, payload)
     }
   },
 
