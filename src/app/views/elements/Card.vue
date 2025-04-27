@@ -18,6 +18,14 @@
     <div>
       <p class="item-title">{{ item.title }}</p>
       <p class="item-description" v-if="item.description">{{ item.description }}</p>
+      <p class="item-timestamp" v-if="item.updatedAt && item.updatedAt !== item.createdAt">
+        <span class="timestamp-label">更新：</span>
+        <span class="timestamp-value">{{ formatCreatedAt(item.updatedAt) }}</span>
+      </p>
+      <p class="item-timestamp" v-else-if="item.createdAt">
+        <span class="timestamp-label">建立：</span>
+        <span class="timestamp-value">{{ formatCreatedAt(item.createdAt) }}</span>
+      </p>
     </div>
   </div>
 
@@ -60,6 +68,17 @@ export default {
     },
     deleteItem () {
       this.$emit('delete', this.item)
+    },
+    formatCreatedAt (createdAt) {
+      // 顯示 yyyy/MM/dd HH:mm
+      if (!createdAt) return ''
+      const d = new Date(createdAt)
+      const yyyy = d.getFullYear()
+      const mm = (d.getMonth() + 1).toString().padStart(2, '0')
+      const dd = d.getDate().toString().padStart(2, '0')
+      const hh = d.getHours().toString().padStart(2, '0')
+      const min = d.getMinutes().toString().padStart(2, '0')
+      return `${yyyy}/${mm}/${dd} ${hh}:${min}`
     }
   }
 }
@@ -75,6 +94,19 @@ export default {
 
   .item-description {
     font-size: 0.7em;
+  }
+
+  .item-timestamp {
+    font-size: 0.68em;
+    color: #8a8a8a;
+    margin-top: 2px;
+    .timestamp-label {
+      font-weight: bold;
+      color: #b0b0b0;
+    }
+    .timestamp-value {
+      font-family: monospace;
+    }
   }
 
   .icons {
