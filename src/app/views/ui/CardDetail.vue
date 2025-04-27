@@ -2,11 +2,11 @@
   <div class="card-detail">
     <div class="card-detail__header">
       <input v-model="editTitle" class="card-detail__title" @blur="saveTitle" @keyup.enter="saveTitle" @keyup.esc="resetTitle" />
+      <button class="close-btn" @click="onCloseClick" title="關閉">&times;</button>
       <div class="card-detail__meta">
         <span class="card-detail__list">{{ listTitle }}</span>
         <span v-if="item.date" class="card-detail__date"><i class="far fa-calendar-alt"></i> {{ item.date }}</span>
       </div>
-      <button class="close-btn" @click="$emit('close')" title="關閉">&times;</button>
     </div>
     <div class="card-detail__section">
       <label class="card-detail__label">描述</label>
@@ -28,6 +28,9 @@
           </button>
         </div>
       </div>
+    </div>
+    <div class="card-detail__footer">
+      <button class="button is-primary" @click="onConfirmClick">確認</button>
     </div>
   </div>
 </template>
@@ -57,6 +60,14 @@ export default {
     },
   },
   methods: {
+    onCloseClick() {
+      console.log('[CardDetail] 關閉按鈕被點擊')
+      this.$emit('close')
+    },
+    onConfirmClick() {
+      this.emitUpdate()
+      this.$emit('close')
+    },
     saveTitle() {
       if (this.editTitle !== this.item.title) this.emitUpdate()
     },
@@ -234,6 +245,15 @@ export default {
         padding: 0.4em 1.1em;
         font-size: 0.95em;
       }
+    }
+  }
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+    .button.is-primary {
+      min-width: 90px;
+      font-size: 1.1em;
     }
   }
 }
