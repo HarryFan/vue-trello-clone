@@ -11,17 +11,46 @@
       <label class="card-detail__label">描述</label>
       <textarea v-model="editDesc" class="card-detail__desc" @blur="saveDesc" @keyup.enter="saveDesc" @keyup.esc="resetDesc" rows="3" />
     </div>
-    <!-- 可擴展：標籤、成員、附件、核對清單、評論等區塊 -->
+
+    <!-- 子任務區塊 -->
+    <div class="card-detail__section">
+      <label class="card-detail__label">子任務</label>
+      <div class="subtasks">
+        <div v-for="sub in editSubItems" :key="sub.id" class="subtask">
+          <label>
+            <input type="checkbox" v-model="sub.isCompleted" @change="emitUpdate" />
+            <span :class="{ 'is-completed': sub.isCompleted }">{{ sub.text }}</span>
+          </label>
+          <button class="delete is-small" @click="removeSubItem(sub.id)"></button>
+        </div>
+        <div class="add-subtask">
+          <input v-model="newSubTask" class="input" placeholder="新增子任務..." @keyup.enter="addSubTask" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 圖片上傳/預覽區塊 -->
+    <div class="card-detail__section">
+      <label class="card-detail__label">圖片</label>
+      <div class="images">
+        <div v-for="imgId in editImages" :key="imgId" class="image-preview">
+          <img :src="getImageFromStorage(imgId)" alt="Task image" />
+          <button class="delete is-small" @click="removeImage(imgId)"></button>
+        </div>
+        <div class="image-upload">
+          <input type="file" ref="fileInput" accept="image/*" @change="onImageUpload" style="display:none" />
+          <button class="button is-info is-light" @click="$refs.fileInput.click()">
+            <span class="icon"><i class="fas fa-upload"></i></span>
+            <span>上傳圖片</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-/**
- * CardDetail - 卡片詳情面板（Dialog 內容）
- * @prop {Object} item - 卡片資料
- * @prop {String} listTitle - 所屬列表名稱
- * @event update - { item } 當資料變更時
- */
+import { makeSubItem, saveImageToStorage, getImageFromStorage, removeImageFromStorage } from 'app/utils/data'
 export default {
   props: {
     item: { type: Object, required: true },
@@ -31,6 +60,9 @@ export default {
     return {
       editTitle: this.item.title,
       editDesc: this.item.description || '',
+      editSubItems: this.item.subItems ? [...this.item.subItems] : [],
+      editImages: this.item.images ? [...this.item.images] : [],
+      newSubTask: '',
     }
   },
   watch: {
@@ -39,25 +71,72 @@ export default {
       handler(val) {
         this.editTitle = val.title
         this.editDesc = val.description || ''
+        this.editSubItems = val.subItems ? [...val.subItems] : []
+        this.editImages = val.images ? [...val.images] : []
       },
     },
   },
   methods: {
     saveTitle() {
-      if (this.editTitle !== this.item.title) {
-        this.$emit('update', { ...this.item, title: this.editTitle })
-      }
+      if (this.editTitle !== this.item.title) this.emitUpdate()
     },
     resetTitle() {
       this.editTitle = this.item.title
     },
     saveDesc() {
-      if (this.editDesc !== this.item.description) {
-        this.$emit('update', { ...this.item, description: this.editDesc })
-      }
+      if (this.editDesc !== this.item.description) this.emitUpdate()
     },
     resetDesc() {
       this.editDesc = this.item.description || ''
+    },
+    addSubTask() {
+      const text = this.newSubTask.trim()
+      if (text) {
+        this.editSubItems.push(makeSubItem(text))
+        this.newSubTask = ''
+        this.emitUpdate()
+      }
+    },
+    removeSubItem(id) {
+      this.editSubItems = this.editSubItems.filter(i => i.id !== id)
+      this.emitUpdate()
+    },
+    emitUpdate() {
+      this.$emit('update', {
+        ...this.item,
+        title: this.editTitle,
+        description: this.editDesc,
+        subItems: this.editSubItems,
+        images: this.editImages,
+        updatedAt: new Date().toISOString(),
+      })
+    },
+    // 圖片功能
+    getImageFromStorage(imgId) {
+      return getImageFromStorage(imgId)
+    },
+    removeImage(imgId) {
+      removeImageFromStorage(imgId)
+      this.editImages = this.editImages.filter(id => id !== imgId)
+      this.emitUpdate()
+    },
+    onImageUpload(e) {
+      const file = e.target.files[0]
+      if (!file) return
+      if (file.size > 1024 * 1024) {
+        alert('圖片大小不能超過 1MB')
+        return
+      }
+      const reader = new FileReader()
+      reader.onload = (evt) => {
+        const base64 = evt.target.result
+        const imgId = saveImageToStorage(base64)
+        if (imgId) {
+          this.editImages.push(imgId)
+          this.emitUpdate()
+        }
+      }
+      reader.readAsDataURL(file)
     },
   },
 }
@@ -90,7 +169,6 @@ export default {
     border-bottom: 1px solid $light-blue;
     margin-bottom: 12px;
   }
-
   &__title {
     font-size: 1.2em;
     font-weight: bold;
@@ -104,7 +182,6 @@ export default {
       font-size: 1em;
     }
   }
-
   &__meta {
     font-size: 0.9em;
     color: $secondary-blue;
@@ -115,18 +192,16 @@ export default {
       gap: 8px;
     }
   }
-
   &__section {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    margin-bottom: 10px;
   }
-
   &__label {
     font-size: 0.95em;
     color: $secondary-blue;
   }
-
   &__desc {
     width: 100%;
     min-height: 60px;
@@ -144,6 +219,67 @@ export default {
     @media (max-width: 600px) {
       font-size: 0.95em;
       padding: 6px;
+    }
+  }
+  // 子任務樣式
+  .subtasks {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    .subtask {
+      display: flex;
+      align-items: center;
+      label {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        .is-completed {
+          text-decoration: line-through;
+          color: #888;
+        }
+      }
+      .delete {
+        margin-left: 8px;
+      }
+    }
+    .add-subtask {
+      margin-top: 4px;
+      .input {
+        width: 100%;
+        font-size: 0.95em;
+      }
+    }
+  }
+  // 圖片樣式
+  .images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    .image-preview {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+      .delete {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        z-index: 2;
+      }
+    }
+    .image-upload {
+      display: flex;
+      align-items: center;
+      .button {
+        padding: 0.4em 1.1em;
+        font-size: 0.95em;
+      }
     }
   }
 }
