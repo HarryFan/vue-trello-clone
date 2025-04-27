@@ -60,7 +60,7 @@
     </div>
 
     <ui-modal :active="detailModal" :cancellable="1" @close="hideDetailModal">
-      <CardDetail v-if="detailItem" :item="detailItem" :list-title="detailListTitle" @update="updateDetailItem" />
+      <CardDetail v-if="detailItem" :item="detailItem" :list-title="detailListTitle" @update="updateDetailItem" @close="hideDetailModal" />
     </ui-modal>
 
     <ui-modal ref="modal"
