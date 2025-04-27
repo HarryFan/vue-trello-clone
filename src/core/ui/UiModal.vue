@@ -3,7 +3,7 @@
   <div class="modal" :class="{'is-active': active}">
     <div class="modal-background" @mousedown="cancel"></div>
     <div class="modal-content">
-      <slot></slot>
+      <slot v-on="$listeners"></slot>
     </div>
   </div>
 
