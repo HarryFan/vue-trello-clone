@@ -6,29 +6,12 @@
         <span class="card-detail__list">{{ listTitle }}</span>
         <span v-if="item.date" class="card-detail__date"><i class="far fa-calendar-alt"></i> {{ item.date }}</span>
       </div>
+      <button class="close-btn" @click="$emit('close')" title="關閉">&times;</button>
     </div>
     <div class="card-detail__section">
       <label class="card-detail__label">描述</label>
       <textarea v-model="editDesc" class="card-detail__desc" @blur="saveDesc" @keyup.enter="saveDesc" @keyup.esc="resetDesc" rows="3" />
     </div>
-
-    <!-- 子任務區塊 -->
-    <div class="card-detail__section">
-      <label class="card-detail__label">子任務</label>
-      <div class="subtasks">
-        <div v-for="sub in editSubItems" :key="sub.id" class="subtask">
-          <label>
-            <input type="checkbox" v-model="sub.isCompleted" @change="emitUpdate" />
-            <span :class="{ 'is-completed': sub.isCompleted }">{{ sub.text }}</span>
-          </label>
-          <button class="delete is-small" @click="removeSubItem(sub.id)"></button>
-        </div>
-        <div class="add-subtask">
-          <input v-model="newSubTask" class="input" placeholder="新增子任務..." @keyup.enter="addSubTask" />
-        </div>
-      </div>
-    </div>
-
     <!-- 圖片上傳/預覽區塊 -->
     <div class="card-detail__section">
       <label class="card-detail__label">圖片</label>
@@ -50,7 +33,7 @@
 </template>
 
 <script>
-import { makeSubItem, saveImageToStorage, getImageFromStorage, removeImageFromStorage } from 'app/utils/data'
+import { saveImageToStorage, getImageFromStorage, removeImageFromStorage } from 'app/utils/data'
 export default {
   props: {
     item: { type: Object, required: true },
@@ -60,9 +43,7 @@ export default {
     return {
       editTitle: this.item.title,
       editDesc: this.item.description || '',
-      editSubItems: this.item.subItems ? [...this.item.subItems] : [],
       editImages: this.item.images ? [...this.item.images] : [],
-      newSubTask: '',
     }
   },
   watch: {
@@ -71,7 +52,6 @@ export default {
       handler(val) {
         this.editTitle = val.title
         this.editDesc = val.description || ''
-        this.editSubItems = val.subItems ? [...val.subItems] : []
         this.editImages = val.images ? [...val.images] : []
       },
     },
@@ -89,24 +69,11 @@ export default {
     resetDesc() {
       this.editDesc = this.item.description || ''
     },
-    addSubTask() {
-      const text = this.newSubTask.trim()
-      if (text) {
-        this.editSubItems.push(makeSubItem(text))
-        this.newSubTask = ''
-        this.emitUpdate()
-      }
-    },
-    removeSubItem(id) {
-      this.editSubItems = this.editSubItems.filter(i => i.id !== id)
-      this.emitUpdate()
-    },
     emitUpdate() {
       this.$emit('update', {
         ...this.item,
         title: this.editTitle,
         description: this.editDesc,
-        subItems: this.editSubItems,
         images: this.editImages,
         updatedAt: new Date().toISOString(),
       })
@@ -168,6 +135,23 @@ export default {
   &__header {
     border-bottom: 1px solid $light-blue;
     margin-bottom: 12px;
+    position: relative;
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: none;
+      border: none;
+      font-size: 2em;
+      color: #aaa;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 8px;
+      transition: color 0.2s;
+      &:hover {
+        color: #e57373;
+      }
+    }
   }
   &__title {
     font-size: 1.2em;
@@ -219,36 +203,6 @@ export default {
     @media (max-width: 600px) {
       font-size: 0.95em;
       padding: 6px;
-    }
-  }
-  // 子任務樣式
-  .subtasks {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    .subtask {
-      display: flex;
-      align-items: center;
-      label {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        .is-completed {
-          text-decoration: line-through;
-          color: #888;
-        }
-      }
-      .delete {
-        margin-left: 8px;
-      }
-    }
-    .add-subtask {
-      margin-top: 4px;
-      .input {
-        width: 100%;
-        font-size: 0.95em;
-      }
     }
   }
   // 圖片樣式
