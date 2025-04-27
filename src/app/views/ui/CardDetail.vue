@@ -34,7 +34,7 @@
       <label class="card-detail__label">細項</label>
       <div class="subitems">
         <div v-for="(sub, idx) in editSubItems" :key="sub.id" class="subitem-row">
-          <input type="checkbox" v-model="sub.isCompleted" @change="onSubItemToggle(idx)" />
+          <input type="checkbox" v-model="editSubItems[idx].isCompleted" @change="emitUpdate()" />
           <span :class="{ 'completed': sub.isCompleted }">{{ sub.text }}</span>
         </div>
         <div class="subitem-add">
@@ -136,10 +136,6 @@ export default {
       reader.readAsDataURL(file)
     },
     // 細項功能
-    onSubItemToggle(idx) {
-      this.editSubItems[idx].isCompleted = !this.editSubItems[idx].isCompleted
-      this.emitUpdate()
-    },
     addSubItem() {
       const text = this.newSubItemText.trim()
       if (!text) return
