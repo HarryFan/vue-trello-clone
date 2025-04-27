@@ -18,6 +18,13 @@
     <div>
       <p class="item-title">{{ item.title }}</p>
       <p class="item-description" v-if="item.description">{{ item.description }}</p>
+      <!-- 細項清單區塊（列表顯示） -->
+      <div class="subitems" v-if="item.subItems && item.subItems.length">
+        <div v-for="(sub, idx) in item.subItems" :key="sub.id" class="subitem-row">
+          <input type="checkbox" :checked="sub.isCompleted" @change="onToggleSubItem(idx)" />
+          <span :class="{ 'completed': sub.isCompleted }">{{ sub.text }}</span>
+        </div>
+      </div>
       <p class="item-timestamp" v-if="item.updatedAt && item.updatedAt !== item.createdAt">
         <span class="timestamp-label">更新：</span>
         <span class="timestamp-value">{{ formatCreatedAt(item.updatedAt) }}</span>
@@ -79,7 +86,15 @@ export default {
       const hh = d.getHours().toString().padStart(2, '0')
       const min = d.getMinutes().toString().padStart(2, '0')
       return `${yyyy}/${mm}/${dd} ${hh}:${min}`
-    }
+    },
+    onToggleSubItem(idx) {
+      // 直接複製 subItems，避免直接改 props
+      const newSubItems = this.item.subItems.map((s, i) =>
+        i === idx ? { ...s, isCompleted: !s.isCompleted } : s
+      )
+      // 觸發更新
+      this.$emit('update', { ...this.item, subItems: newSubItems, updatedAt: new Date().toISOString() })
+    },
   }
 }
 
@@ -168,6 +183,23 @@ export default {
   .card:hover .icon-edit,
   .card:hover .icon-delete {
     display: flex;
+  }
+
+  .subitems {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 4px 0 0 0;
+    .subitem-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.95em;
+      .completed {
+        text-decoration: line-through;
+        color: #bbb;
+      }
+    }
   }
 
   @media (max-width: 600px) {
